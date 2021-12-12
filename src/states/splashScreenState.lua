@@ -62,7 +62,7 @@ function newSplashScreenState()
                                     { r = 1, g = 1, b = 1 }, 2.5,
                                     function()
                                         stateStack.push(newGameTestState())
-                                        stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. WHILE YOU DO THAT, I AM GOING TO MAKE A MIDNIGHT SNACK... BE RIGHT BACK!', portraits['1-1'], bleep))
+                                        stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. HERE IS SOME MORE FILLER TEXT TO TEST OUT PRINTING LONGER MESSAGES IN THESE DIALOGUE BOXES. HOW IS IT?', portraits['1-1'], bleep))
                                     end
                                 )
                             )
