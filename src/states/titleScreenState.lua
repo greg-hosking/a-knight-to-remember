@@ -10,21 +10,73 @@ function newTitleScreenState()
     titleScreenState.title.y = H * 0.2
 
     titleScreenState.selectBox = {}
-    titleScreenState.selectBox.w = W * 0.45
-    titleScreenState.selectBox.h = H * 0.15
+    titleScreenState.selectBox.w = W * 0.25
+    titleScreenState.selectBox.h = H * 0.225
     titleScreenState.selectBox.x = W * 0.05
-    titleScreenState.selectBox.y = H * 0.65
+    titleScreenState.selectBox.y = H * 0.7
+    titleScreenState.selectBox.font = fonts.serif.md.font
+
+    titleScreenState.selectBox.option1 = {}
+    titleScreenState.selectBox.option1.text = 'NEW GAME'
+    titleScreenState.selectBox.option1.x = titleScreenState.selectBox.x + (W * 0.075)
+    titleScreenState.selectBox.option1.y = titleScreenState.selectBox.y + (H * 0.05)
+
+    titleScreenState.selectBox.option2 = {}
+    titleScreenState.selectBox.option2.text = 'CREDITS'
+    titleScreenState.selectBox.option2.x = titleScreenState.selectBox.x + (W * 0.075)
+    titleScreenState.selectBox.option2.y = titleScreenState.selectBox.option1.y + (H * 0.075)
+
+    titleScreenState.selectBox.selected = 1
+    titleScreenState.selectBox.cursor = {}
+    titleScreenState.selectBox.cursor.image = love.graphics.newImage('assets/images/icon081.png')
+    titleScreenState.selectBox.cursor.sx = 4
+    titleScreenState.selectBox.cursor.sy = 4
+    titleScreenState.selectBox.cursor.w = titleScreenState.selectBox.cursor.image:getWidth() * titleScreenState.selectBox.cursor.sx
+    titleScreenState.selectBox.cursor.h = titleScreenState.selectBox.cursor.image:getHeight() * titleScreenState.selectBox.cursor.sy
+    titleScreenState.selectBox.cursor.x = titleScreenState.selectBox.x + (W * 0.025)
+    titleScreenState.selectBox.cursor.y = titleScreenState.selectBox.option1.y - (titleScreenState.selectBox.cursor.h * 0.25)
 
     sounds.soundtrack.title:setLooping(true)
     sounds.soundtrack.title:play()
 
     function titleScreenState.update(dt)
-        if love.keyboard.wasPressed('up') then
-    
-        elseif love.keyboard.wasPressed('down') then
-            
+        if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
+            sounds.sfx.cursor:stop()
+            sounds.sfx.cursor:play()
+
+            if titleScreenState.selectBox.selected == 1 then
+                titleScreenState.selectBox.selected = 2
+                titleScreenState.selectBox.cursor.y = titleScreenState.selectBox.option2.y - 
+                                                      (titleScreenState.selectBox.cursor.h * 0.25)
+            else
+                titleScreenState.selectBox.selected = 1
+                titleScreenState.selectBox.cursor.y = titleScreenState.selectBox.option1.y - 
+                                                      (titleScreenState.selectBox.cursor.h * 0.25)
+            end
         elseif love.keyboard.wasPressed('return') then
-            
+            sounds.sfx.select:play()
+
+            if titleScreenState.selectBox.selected == 1 then
+                local fadeOutState = newFadeOutState({ r = 1, g = 1, b = 1 }, 3.5, true)
+                local fadeInState = newFadeInState(
+                    { r = 1, g = 1, b = 1}, 3.5, true, 
+                    function()
+                        sounds.soundtrack.title:stop()
+                        stateStack.push(newCreditsScreenState())
+                        stateStack.push(fadeOutState)
+                    end)
+                stateStack.push(fadeInState)                
+            else
+                local fadeOutState = newFadeOutState({ r = 0, g = 0, b = 0 }, 2.5, true)
+                local fadeInState = newFadeInState(
+                    { r = 0, g = 0, b = 0}, 2.5, true, 
+                    function()
+                        sounds.soundtrack.title:stop()
+                        stateStack.push(newCreditsScreenState())
+                        stateStack.push(fadeOutState)
+                    end)
+                stateStack.push(fadeInState)
+            end
         end
     end
 
@@ -33,15 +85,13 @@ function newTitleScreenState()
         love.graphics.draw(titleScreenState.backgroundImage, 0, 0, 0,
                            W / titleScreenState.backgroundImage:getWidth(), H / titleScreenState.backgroundImage:getHeight())
 
-        love.graphics.setColor(0, 0, 0, 0.5)
-        love.graphics.rectangle('fill', titleScreenState.selectBox.x, titleScreenState.selectBox.y,
-                                        titleScreenState.selectBox.w, titleScreenState.selectBox.h)
+        love.graphics.print(titleScreenState.selectBox.selected)
 
         -- Print the title text with a black outline.
         love.graphics.setColor(0, 0, 0)
         love.graphics.setFont(titleScreenState.title.font)
         love.graphics.print(titleScreenState.title.text, 
-                            titleScreenState.title.x -3, titleScreenState.title.y)
+                            titleScreenState.title.x - 3, titleScreenState.title.y)
         love.graphics.print(titleScreenState.title.text,
                             titleScreenState.title.x + 3, titleScreenState.title.y)
         love.graphics.print(titleScreenState.title.text,
@@ -50,59 +100,57 @@ function newTitleScreenState()
                             titleScreenState.title.x, titleScreenState.title.y + 3)
         love.graphics.setColor(1, 1, 1)
         love.graphics.print(titleScreenState.title.text,
-                            titleScreenState.title.x, titleScreenState.title.y)    
+                            titleScreenState.title.x, titleScreenState.title.y) 
 
+        -- Draw select box with a black and white border.
+        love.graphics.setColor(0, 0, 0, 0.5)
+        love.graphics.setLineWidth(1)
+        love.graphics.rectangle('fill', titleScreenState.selectBox.x, titleScreenState.selectBox.y,
+                                        titleScreenState.selectBox.w, titleScreenState.selectBox.h)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.setLineWidth(4)
+        love.graphics.rectangle('line', titleScreenState.selectBox.x, titleScreenState.selectBox.y,
+                                        titleScreenState.selectBox.w, titleScreenState.selectBox.h)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle('line', titleScreenState.selectBox.x - 3, titleScreenState.selectBox.y - 3,
+                                        titleScreenState.selectBox.w + 6, titleScreenState.selectBox.h + 6)
+
+        love.graphics.setColor(1, 1, 1)
+
+        -- Print the text for each option with a black outline.
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.setFont(titleScreenState.selectBox.font)
+        love.graphics.print(titleScreenState.selectBox.option1.text, 
+                            titleScreenState.selectBox.option1.x - 2, titleScreenState.selectBox.option1.y)
+        love.graphics.print(titleScreenState.selectBox.option1.text,
+                            titleScreenState.selectBox.option1.x + 2, titleScreenState.selectBox.option1.y)
+        love.graphics.print(titleScreenState.selectBox.option1.text,
+                            titleScreenState.selectBox.option1.x, titleScreenState.selectBox.option1.y - 2)
+        love.graphics.print(titleScreenState.selectBox.option1.text,
+                            titleScreenState.selectBox.option1.x, titleScreenState.selectBox.option1.y + 2)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print(titleScreenState.selectBox.option1.text,
+                            titleScreenState.selectBox.option1.x, titleScreenState.selectBox.option1.y) 
+
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(titleScreenState.selectBox.option2.text, 
+                            titleScreenState.selectBox.option2.x - 2, titleScreenState.selectBox.option2.y)
+        love.graphics.print(titleScreenState.selectBox.option2.text,
+                            titleScreenState.selectBox.option2.x + 2, titleScreenState.selectBox.option2.y)
+        love.graphics.print(titleScreenState.selectBox.option2.text,
+                            titleScreenState.selectBox.option2.x, titleScreenState.selectBox.option2.y - 2)
+        love.graphics.print(titleScreenState.selectBox.option2.text,
+                            titleScreenState.selectBox.option2.x, titleScreenState.selectBox.option2.y + 2)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print(titleScreenState.selectBox.option2.text,
+                            titleScreenState.selectBox.option2.x, titleScreenState.selectBox.option2.y) 
+
+        -- Draw the cursor next to the selected option.
+        love.graphics.draw(titleScreenState.selectBox.cursor.image,
+                           titleScreenState.selectBox.cursor.x, titleScreenState.selectBox.cursor.y, 0, 
+                           titleScreenState.selectBox.cursor.sx, titleScreenState.selectBox.cursor.sy)
     end
-
 
     return titleScreenState
 end
-
-
-
--- function newTitleScreenState()
---     local T = {}
-
---     sounds.soundtrack.title:play()
-
---     local image = love.graphics.newImage('assets/images/backgrounds/title.png')
-
---     function T.update(dt)
---         if love.keyboard.wasPressed('c') then
---             stateStack.push(newCreditsScreenState())
---         end
---         if love.keyboard.wasPressed('return') then
---             stateStack.pop()
---             -- love.graphics.setBackgroundColor(0, 0, 0)
---             stateStack.push(
---                 newFadeInState(
---                     { r = 0, g = 0, b = 0 }, 2.5,
---                     function()
---                         stateStack.push(
---                             newFadeOutState(
---                                 { r = 0, g = 0, b = 0 }, 2.5,
---                                 function()
---                                     stateStack.push(newGameTestState())
---                                     stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. HERE IS SOME MORE FILLER TEXT TO TEST OUT PRINTING LONGER MESSAGES IN THESE DIALOGUE BOXES. HOW IS IT?', portraits['1-1'], bleep))
---                                 end
---                             )
---                         )
---                     end
---                 )
---             )        
---         end
---     end
-
---     function T.draw()
---         love.graphics.setColor(1, 1, 1)
---         love.graphics.draw(image, 0, 0, 0, W / image:getWidth(), H / image:getHeight())
-
---         love.graphics.setFont(fonts.serif.xl.font)
---         love.graphics.printf('A KNIGHT TO REMEMBER', W * 0.05, H * 0.25, W, 'left')
-
---         love.graphics.setFont(fonts.serif.lg.font)
---         love.graphics.printf('New Game\nLoad Game\nCredits', 0, H * 0.7, W * 0.66, 'center')
---     end
-
---     return T
--- end

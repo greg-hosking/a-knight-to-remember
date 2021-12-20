@@ -9,7 +9,7 @@ function newCreditsScreenState()
     creditsScreenState.backgroundBox.x = (W * 0.5) - (creditsScreenState.backgroundBox.w * 0.5)
     creditsScreenState.backgroundBox.maxY = H * 1.05
     creditsScreenState.backgroundBox.y = creditsScreenState.backgroundBox.maxY
-    creditsScreenState.backgroundBox.dy = 175
+    creditsScreenState.backgroundBox.dy = 150
 
     -- Calculate text positions.
     creditsScreenState.textArea = {}
@@ -43,6 +43,7 @@ function newCreditsScreenState()
     creditsScreenState.textArea.dy = creditsScreenState.backgroundBox.dy
 
     -- Play the credits screen soundtrack.
+    sounds.soundtrack.credits:setPitch(0.75)
     sounds.soundtrack.credits:play()
 
     local function exitCreditsScreenState()

@@ -6,10 +6,10 @@ function love.load()
 
     portraits = require('portraits')
 
-    -- stateStack.push(newCreditsScreenState())
-
     stateStack.push(newSplashScreenState())
     stateStack.push(newFadeOutState({r=0, g=0, b=0}, 2.5, false))
+
+    -- stateStack.push(newTitleScreenState())
 
     love.keyboard.keysPressed = {}
 end

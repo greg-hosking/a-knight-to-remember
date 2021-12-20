@@ -25,8 +25,8 @@ sounds.sfx.blips = {}
 for i = 1, 30 do
     sounds.sfx.blips[i] = love.audio.newSource(sfxPath .. 'blips/blip' .. i .. '.ogg', 'static')
 end
-sounds.sfx.cursor = love.audio.newSource(sfxPath .. 'cursor.wav', 'static')
-sounds.sfx.titleSelection = love.audio.newSource(sfxPath .. 'title_selection.wav', 'static')
+sounds.sfx.cursor = love.audio.newSource(sfxPath .. 'ui/cursor.wav', 'static')
+sounds.sfx.select = love.audio.newSource(sfxPath .. 'ui/select.wav', 'static')
 
 
 -- IMPORT FONTS.
