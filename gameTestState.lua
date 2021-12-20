@@ -3,6 +3,8 @@ function newGameTestState()
 
     love.audio.play(fieldSoundtrack)
 
+    local image = love.graphics.newImage('assets/images/splash.png')
+
     T.x = W / 2
     T.y = H / 2
 
@@ -25,6 +27,9 @@ function newGameTestState()
     end
 
     function T.draw()
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.draw(image, 0, 0, 0, W / image:getWidth(), H / image:getHeight())
+
         love.graphics.setColor(0, 0, 1)
         love.graphics.rectangle('fill', T.x, T.y, T.w, T.h)
     end

@@ -22,9 +22,10 @@ function newFadeInState(color, duration, doFadeVol, callback)
             love.audio.setVolume(fadeInState.vol)
         end
 
-        -- Once the fade in is complete, pop this state off the stack and call the callback.
+        -- Once the fade in is complete, pop this and the previous state off the stack and call the callback.
         if fadeInState.a >= 1 then
-            stateStack.pop()
+            stateStack.pop() -- Pop off this state.
+            stateStack.pop() -- Also pop off the previous state that we were fading from.
             fadeInState.callback()
         end
     end

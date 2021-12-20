@@ -10,8 +10,8 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
 
     -- Calculate speaker portrait scale, dimensions, padding, and position.
     dialogueState.dialogueBox.speakerPortrait = speakerPortrait
-    dialogueState.dialogueBox.speakerPortrait.sx = W / 384
-    dialogueState.dialogueBox.speakerPortrait.sy = H / 240
+    dialogueState.dialogueBox.speakerPortrait.sx = 4
+    dialogueState.dialogueBox.speakerPortrait.sy = 4
     local quad = {}
     quad.x, quad.y, quad.w, quad.h = dialogueState.dialogueBox.speakerPortrait.quad:getViewport()
     dialogueState.dialogueBox.speakerPortrait.w = quad.w * dialogueState.dialogueBox.speakerPortrait.sx
@@ -82,8 +82,8 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
         else
             -- Set the arrow to visible and animate it.
             dialogueState.dialogueBox.textArea.arrow.visible = true
-            if (dialogueState.dialogueBox.textArea.arrow.y >= dialogueState.dialogueBox.textArea.arrow.maxY or
-                dialogueState.dialogueBox.textArea.arrow.y <= dialogueState.dialogueBox.textArea.arrow.minY) then
+            if (dialogueState.dialogueBox.textArea.arrow.y > dialogueState.dialogueBox.textArea.arrow.maxY or
+                dialogueState.dialogueBox.textArea.arrow.y < dialogueState.dialogueBox.textArea.arrow.minY) then
                 dialogueState.dialogueBox.textArea.arrow.dy = -1 * dialogueState.dialogueBox.textArea.arrow.dy
             end
             dialogueState.dialogueBox.textArea.arrow.y = dialogueState.dialogueBox.textArea.arrow.y +
@@ -99,7 +99,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
 
     function dialogueState.draw()
         -- Draw the outer box with a black and white border.
-        love.graphics.setColor(0, 0, 0, 0.25)
+        love.graphics.setColor(0, 0, 0, 0.5)
         love.graphics.setLineWidth(1)
         love.graphics.rectangle('fill', dialogueState.dialogueBox.x, dialogueState.dialogueBox.y,
                                         dialogueState.dialogueBox.w, dialogueState.dialogueBox.h)
@@ -129,16 +129,16 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
         
         -- Print the text with a black outline.
         love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
-                             dialogueState.dialogueBox.textArea.x, dialogueState.dialogueBox.textArea.y - 3,
-                             dialogueState.dialogueBox.textArea.w, 'left')
-        love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
-                             dialogueState.dialogueBox.textArea.x, dialogueState.dialogueBox.textArea.y + 3,
-                             dialogueState.dialogueBox.textArea.w, 'left')
-        love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
                              dialogueState.dialogueBox.textArea.x - 3, dialogueState.dialogueBox.textArea.y,
                              dialogueState.dialogueBox.textArea.w, 'left')
         love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
                              dialogueState.dialogueBox.textArea.x + 3, dialogueState.dialogueBox.textArea.y,
+                             dialogueState.dialogueBox.textArea.w, 'left')
+        love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
+                             dialogueState.dialogueBox.textArea.x, dialogueState.dialogueBox.textArea.y - 3,
+                             dialogueState.dialogueBox.textArea.w, 'left')
+        love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
+                             dialogueState.dialogueBox.textArea.x, dialogueState.dialogueBox.textArea.y + 3,
                              dialogueState.dialogueBox.textArea.w, 'left')
         love.graphics.setColor(1, 1, 1)
         love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
@@ -151,7 +151,6 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
                                dialogueState.dialogueBox.textArea.arrow.x, dialogueState.dialogueBox.textArea.arrow.y,
                                0, dialogueState.dialogueBox.textArea.arrow.sx, dialogueState.dialogueBox.textArea.arrow.sy)
         end
-        
     end
 
     return dialogueState

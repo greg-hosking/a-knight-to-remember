@@ -16,24 +16,22 @@ function newSplashScreenState()
 
     -- Calculate text area font size, width, and position.
     splashScreenState.textArea = {}
-    splashScreenState.textArea.text = 'Red Sky\nStudios'
-    splashScreenState.textArea.fontSize = 96
-    splashScreenState.textArea.font = love.graphics.setNewFont('assets/fonts/font.ttf',
-                                                               splashScreenState.textArea.fontSize)
+    splashScreenState.textArea.text = 'Red Sky' .. '\n' .. 'Studios'
+    splashScreenState.textArea.font = fonts.pixel.xl.font
     splashScreenState.textArea.font:setLineHeight(1.5)
     splashScreenState.textArea.maxX = W * 1.05
     splashScreenState.textArea.minX = (W * 0.5)
     splashScreenState.textArea.x = splashScreenState.textArea.maxX
-    splashScreenState.textArea.y = (H * 0.5) - (splashScreenState.textArea.fontSize * 1.5)
+    splashScreenState.textArea.y = (H * 0.5) - (96 * 1.5)
     splashScreenState.textArea.dx = (splashScreenState.textArea.minX - splashScreenState.textArea.x) / 1
 
-    splashScreenState.thunder = love.audio.newSource('thunder.mp3', 'static')
-    splashScreenState.thunder:setPitch(1.25) 
-    splashScreenState.thunder:play()
+    -- Create and play splash screen sound effect (rolling thunder).
+    splashScreenState.sfx = love.audio.newSource('assets/audio/sfx/splash_screen.mp3', 'static')
+    splashScreenState.sfx:setPitch(1.5)
+    splashScreenState.sfx:play()
 
     function splashScreenState.update(dt)
-
-        if splashScreenState.thunder:isPlaying() then
+        if splashScreenState.sfx:isPlaying() then
             -- Animate the cloud icons and text sliding into view.
             if (splashScreenState.icon.x < splashScreenState.icon.maxX) then
                 splashScreenState.icon.x = splashScreenState.icon.x + (splashScreenState.icon.dx * dt)            
@@ -53,22 +51,15 @@ function newSplashScreenState()
             if (splashScreenState.icon.x <= splashScreenState.icon.minX and
                 splashScreenState.textArea.x >= splashScreenState.textArea.maxX) then
                 stateStack.pop()
-                stateStack.push(
-                    newFadeInState(
-                        { r = 1, g = 1, b = 1 }, 2.5,
-                        function()
-                            stateStack.push(
-                                newFadeOutState(
-                                    { r = 1, g = 1, b = 1 }, 2.5,
-                                    function()
-                                        stateStack.push(newGameTestState())
-                                        stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. HERE IS SOME MORE FILLER TEXT TO TEST OUT PRINTING LONGER MESSAGES IN THESE DIALOGUE BOXES. HOW IS IT?', portraits['1-1'], bleep))
-                                    end
-                                )
-                            )
-                        end
-                    )
-                )        
+                -- And fade into the title screen.
+                local fadeOutState = newFadeOutState({ r = 0, g = 0, b = 0}, 2.5, true)
+                local fadeInState = newFadeInState(
+                    { r = 0, g = 0, b = 0}, 2.5, false,
+                    function()
+                        stateStack.push(newTitleScreenState())
+                        stateStack.push(fadeOutState)
+                    end)
+                stateStack.push(fadeInState)
             end
         end
     end
@@ -85,6 +76,7 @@ function newSplashScreenState()
                            0, splashScreenState.icon.sx, splashScreenState.icon.sy)
         
         -- Print the text with a dark gray outline.
+        love.graphics.setFont(splashScreenState.textArea.font)
         love.graphics.setColor(49/255, 61/255, 69/255)
         love.graphics.print(splashScreenState.textArea.text, splashScreenState.textArea.x - 8, splashScreenState.textArea.y)
         love.graphics.print(splashScreenState.textArea.text, splashScreenState.textArea.x + 8, splashScreenState.textArea.y)
@@ -96,3 +88,8 @@ function newSplashScreenState()
 
     return splashScreenState
 end
+
+
+
+-- stateStack.push(newGameTestState())
+-- stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. HERE IS SOME MORE FILLER TEXT TO TEST OUT PRINTING LONGER MESSAGES IN THESE DIALOGUE BOXES. HOW IS IT?', portraits['1-1'], bleep))
