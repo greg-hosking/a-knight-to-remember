@@ -35,7 +35,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
 
     -- Calculate arrow scale, dimensions, and position.
     dialogueState.dialogueBox.textArea.arrow = {}
-    dialogueState.dialogueBox.textArea.arrow.image = love.graphics.newImage('assets/images/arrow.png')
+    dialogueState.dialogueBox.textArea.arrow.image = love.graphics.newImage('assets/images/icons/arrow.png')
     dialogueState.dialogueBox.textArea.arrow.sx = 5
     dialogueState.dialogueBox.textArea.arrow.sy = 5
     dialogueState.dialogueBox.textArea.arrow.w = dialogueState.dialogueBox.textArea.arrow.image:getWidth() *
@@ -48,10 +48,8 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
     dialogueState.dialogueBox.textArea.arrow.maxY = dialogueState.dialogueBox.y + dialogueState.dialogueBox.h -
                                                     dialogueState.dialogueBox.padding - 
                                                     (dialogueState.dialogueBox.textArea.arrow.h * 0.75)
-    dialogueState.dialogueBox.textArea.arrow.minY = dialogueState.dialogueBox.textArea.arrow.maxY -
-                                                    (dialogueState.dialogueBox.textArea.arrow.h * 0.25)
-    dialogueState.dialogueBox.textArea.arrow.y = dialogueState.dialogueBox.textArea.arrow.maxY 
-    dialogueState.dialogueBox.textArea.arrow.dy = quad.h
+    dialogueState.dialogueBox.textArea.arrow.y = dialogueState.dialogueBox.textArea.arrow.maxY
+    dialogueState.dialogueBox.textArea.arrow.dy = quad.h * 0.75
     dialogueState.dialogueBox.textArea.arrow.visible = false
     
     dialogueState.blip = speakerBlip
@@ -61,7 +59,9 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
     local tBtwnChars = 0.05
     local tSincePrevChar = 0
     local index = 1
+    local t = 0
     function dialogueState.update(dt)
+        t = t + dt
         if dialogueState.dialogueBox.textArea.currentText ~= dialogueState.dialogueBox.textArea.fullText then
             -- Allow the user to press return to skip the dialogue.
             if love.keyboard.wasPressed('return') then
@@ -79,12 +79,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
         else
             -- Set the arrow to visible and animate it.
             dialogueState.dialogueBox.textArea.arrow.visible = true
-            if (dialogueState.dialogueBox.textArea.arrow.y > dialogueState.dialogueBox.textArea.arrow.maxY or
-                dialogueState.dialogueBox.textArea.arrow.y < dialogueState.dialogueBox.textArea.arrow.minY) then
-                dialogueState.dialogueBox.textArea.arrow.dy = -1 * dialogueState.dialogueBox.textArea.arrow.dy
-            end
-            dialogueState.dialogueBox.textArea.arrow.y = dialogueState.dialogueBox.textArea.arrow.y +
-                                                        (dialogueState.dialogueBox.textArea.arrow.dy * dt)
+            dialogueState.dialogueBox.textArea.arrow.y = dialogueState.dialogueBox.textArea.arrow.maxY - (8 * math.cos(8 * t))
 
             -- Allow the user to press return to exit the dialogue once it is finished.
             if love.keyboard.wasPressed('return') then
@@ -125,6 +120,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
                                 dialogueState.dialogueBox.speakerPortrait.w + 6, dialogueState.dialogueBox.speakerPortrait.h + 6)
         
         -- Print the text with a black outline.
+        love.graphics.setFont(dialogueState.dialogueBox.textArea.font)
         love.graphics.printf(dialogueState.dialogueBox.textArea.currentText,
                              dialogueState.dialogueBox.textArea.x - 3, dialogueState.dialogueBox.textArea.y,
                              dialogueState.dialogueBox.textArea.w, 'left')
