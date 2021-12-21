@@ -20,7 +20,6 @@ function newTitleScreenState()
     titleScreenState.selectBox.option1.text = 'NEW GAME'
     titleScreenState.selectBox.option1.x = titleScreenState.selectBox.x + (W * 0.075)
     titleScreenState.selectBox.option1.y = titleScreenState.selectBox.y + (H * 0.05)
-
     titleScreenState.selectBox.option2 = {}
     titleScreenState.selectBox.option2.text = 'CREDITS'
     titleScreenState.selectBox.option2.x = titleScreenState.selectBox.x + (W * 0.075)
@@ -57,12 +56,27 @@ function newTitleScreenState()
             sounds.sfx.select:play()
 
             if titleScreenState.selectBox.selected == 1 then
-                local fadeOutState = newFadeOutState({ r = 1, g = 1, b = 1 }, 3.5, true)
+                local fadeOutState = newFadeOutState(
+                    { r = 0, g = 0, b = 0 }, 2.5, true,
+                    function()
+                        stateStack.push(newDialogueState(
+                            'THEY TRAIN RIGOROUSLY EVERY DAY... WITH THE INTENT TO SOMEDAY LEAVE THE FARM AND ' .. 
+                            'BECOME KNIGHTS IN THE KING\'S ROYAL ARMY... JUST AS THEIR FATHER HAD ONCE BEEN....', 
+                            portraits['4-5'], sounds.sfx.blips[20]))
+                        stateStack.push(newDialogueState(
+                            'THIS VILLAGE IS WHERE THE LEGEND BEGINS... OF TWO BROTHERS WHO TIRE OF THE FARM LIFE ' .. 
+                            'AND SEEK TO FOLLOW IN THEIR FATHER\'S FOOTSTEPS.', 
+                            portraits['4-5'], sounds.sfx.blips[20]))
+                        stateStack.push(newDialogueState(
+                            'IN THE OUTER REACHES OF THE KINGDOM OF XAELORA... '  .. 
+                            'THERE IS A SMALL FARMING VILLAGE KNOWN AS ASTEVARIA....', 
+                            portraits['4-5'], sounds.sfx.blips[20]))
+                    end)
                 local fadeInState = newFadeInState(
-                    { r = 1, g = 1, b = 1}, 3.5, true, 
+                    { r = 0, g = 0, b = 0}, 5, true, 
                     function()
                         sounds.soundtrack.title:stop()
-                        stateStack.push(newCreditsScreenState())
+                        love.graphics.setBackgroundColor(0, 0, 0)
                         stateStack.push(fadeOutState)
                     end)
                 stateStack.push(fadeInState)                
@@ -79,7 +93,6 @@ function newTitleScreenState()
             end
         end
     end
-
 
     function titleScreenState.draw()
         love.graphics.draw(titleScreenState.backgroundImage, 0, 0, 0,

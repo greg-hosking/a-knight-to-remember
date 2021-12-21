@@ -31,10 +31,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
     dialogueState.dialogueBox.textArea.w = (dialogueState.dialogueBox.x + dialogueState.dialogueBox.w) - 
                                            (dialogueState.dialogueBox.padding + dialogueState.dialogueBox.textArea.x)
 
-    dialogueState.dialogueBox.textArea.fontSize = 48
-    dialogueState.dialogueBox.textArea.font = love.graphics.setNewFont('assets/fonts/ferrum.ttf', 
-                                                                       dialogueState.dialogueBox.textArea.fontSize)
-    dialogueState.dialogueBox.textArea.font:setLineHeight(1)
+    dialogueState.dialogueBox.textArea.font = fonts.serif.md.font
 
     -- Calculate arrow scale, dimensions, and position.
     dialogueState.dialogueBox.textArea.arrow = {}
@@ -77,7 +74,7 @@ function newDialogueState(text, speakerPortrait, speakerBlip, callback)
                 dialogueState.dialogueBox.textArea.currentText = string.sub(dialogueState.dialogueBox.textArea.fullText,
                                                                             1, index)
                 index = index + 1
-                love.audio.play(dialogueState.blip)
+                dialogueState.blip:play()
             end
         else
             -- Set the arrow to visible and animate it.

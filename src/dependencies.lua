@@ -63,4 +63,4 @@ fonts.serif.sm.size = 32
 fonts.serif.sm.font = love.graphics.newFont(serifPath, fonts.serif.sm.size)
 
 -- IMPORT IMAGES.
-
+portraits = require('src/portraits')

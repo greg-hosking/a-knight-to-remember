@@ -4,12 +4,12 @@ function love.load()
 
     require('src/dependencies')
 
-    portraits = require('portraits')
+    -- player = newPlayer()
 
-    stateStack.push(newSplashScreenState())
-    stateStack.push(newFadeOutState({r=0, g=0, b=0}, 2.5, false))
+    -- stateStack.push(newSplashScreenState())
+    -- stateStack.push(newFadeOutState({r=0, g=0, b=0}, 2.5, false))
 
-    -- stateStack.push(newTitleScreenState())
+    stateStack.push(newGameTestState())
 
     love.keyboard.keysPressed = {}
 end
