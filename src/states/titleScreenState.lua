@@ -27,7 +27,7 @@ function newTitleScreenState()
 
     titleScreenState.selectBox.selected = 1
     titleScreenState.selectBox.cursor = {}
-    titleScreenState.selectBox.cursor.image = love.graphics.newImage('assets/images/icon081.png')
+    titleScreenState.selectBox.cursor.image = love.graphics.newImage('assets/images/icons/cursor.png')
     titleScreenState.selectBox.cursor.sx = 4
     titleScreenState.selectBox.cursor.sy = 4
     titleScreenState.selectBox.cursor.w = titleScreenState.selectBox.cursor.image:getWidth() * titleScreenState.selectBox.cursor.sx
@@ -35,7 +35,6 @@ function newTitleScreenState()
     titleScreenState.selectBox.cursor.x = titleScreenState.selectBox.x + (W * 0.025)
     titleScreenState.selectBox.cursor.y = titleScreenState.selectBox.option1.y - (titleScreenState.selectBox.cursor.h * 0.25)
 
-    sounds.soundtrack.title:setLooping(true)
     sounds.soundtrack.title:play()
 
     function titleScreenState.update(dt)
@@ -59,10 +58,23 @@ function newTitleScreenState()
                 local fadeOutState = newFadeOutState(
                     { r = 0, g = 0, b = 0 }, 2.5, true,
                     function()
+                        stateStack.push(newScene1State())
+                        stateStack.push(newFadeOutState(
+                            { r = 0, g = 0, b = 0 }, 2.5, true,
+                            function()
+                                stateStack.push(newDialogueState(
+                                    'HEY ARCHIE! YOU\'RE FINALLY AWAKE! I WAS ALMOST STARTING TO GET WORRIED ABOUT YOU...', 
+                                    portraits['2-6'], sounds.sfx.blips[10],
+                                    function() 
+                                        stateStack.push(newDialogueState(
+                                            'I\'M HEADING TO THE KNIGHT OUTPOST NOW. MEET ME THERE WHEN YOU\'RE READY TO TRAIN!', 
+                                            portraits['2-6'], sounds.sfx.blips[10]))                                                                 
+                                    end))
+                            end))
                         stateStack.push(newDialogueState(
                             'THEY TRAIN RIGOROUSLY EVERY DAY... WITH THE INTENT TO SOMEDAY LEAVE THE FARM AND ' .. 
                             'BECOME KNIGHTS IN THE KING\'S ROYAL ARMY... JUST AS THEIR FATHER HAD ONCE BEEN....', 
-                            portraits['4-5'], sounds.sfx.blips[20]))
+                            portraits['4-5'], sounds.sfx.blips[20], function() sounds.soundtrack.village:play() end))
                         stateStack.push(newDialogueState(
                             'THIS VILLAGE IS WHERE THE LEGEND BEGINS... OF TWO BROTHERS WHO TIRE OF THE FARM LIFE ' .. 
                             'AND SEEK TO FOLLOW IN THEIR FATHER\'S FOOTSTEPS.', 
@@ -73,7 +85,7 @@ function newTitleScreenState()
                             portraits['4-5'], sounds.sfx.blips[20]))
                     end)
                 local fadeInState = newFadeInState(
-                    { r = 0, g = 0, b = 0}, 5, true, 
+                    { r = 0, g = 0, b = 0}, 2.5, true, 
                     function()
                         sounds.soundtrack.title:stop()
                         love.graphics.setBackgroundColor(0, 0, 0)
@@ -97,8 +109,6 @@ function newTitleScreenState()
     function titleScreenState.draw()
         love.graphics.draw(titleScreenState.backgroundImage, 0, 0, 0,
                            W / titleScreenState.backgroundImage:getWidth(), H / titleScreenState.backgroundImage:getHeight())
-
-        love.graphics.print(titleScreenState.selectBox.selected)
 
         -- Print the title text with a black outline.
         love.graphics.setColor(0, 0, 0)
