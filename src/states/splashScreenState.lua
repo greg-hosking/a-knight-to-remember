@@ -3,7 +3,7 @@ function newSplashScreenState()
 
     -- Calculate the scale, dimensions, and position of the splash screen icon.
     splashScreenState.icon = {}
-    splashScreenState.icon.image = love.graphics.newImage('assets/images/splash_screen_icon.png')
+    splashScreenState.icon.image = love.graphics.newImage('assets/images/icons/cloud.png')
     splashScreenState.icon.sx = 1.25
     splashScreenState.icon.sy = 1.25
     splashScreenState.icon.w = splashScreenState.icon.image:getWidth() * splashScreenState.icon.sx
@@ -88,8 +88,3 @@ function newSplashScreenState()
 
     return splashScreenState
 end
-
-
-
--- stateStack.push(newGameTestState())
--- stateStack.push(newDialogueState('THIS IS AN EXAMPLE OF A DIALOGUE BOX. PRESS RETURN TO CONTINUE. HERE IS SOME MORE FILLER TEXT TO TEST OUT PRINTING LONGER MESSAGES IN THESE DIALOGUE BOXES. HOW IS IT?', portraits['1-1'], bleep))
