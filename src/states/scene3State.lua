@@ -24,8 +24,7 @@ function newScene3State()
     scene3State.map.layers.eventTriggers.objects[1].callback = callback
         
     -- Spawn in the player.
-    local player = newPlayer(scene3State.map, 256, 400)
-
+    local player = newPlayer(scene3State.map, 864, 128)
     function scene3State.update(dt)
         player.update(dt)
     end

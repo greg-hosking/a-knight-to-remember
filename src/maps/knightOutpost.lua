@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 6,
-  nextobjectid = 67,
+  nextobjectid = 69,
   properties = {},
   tilesets = {
     {
@@ -40,47 +40,6 @@ return {
     }
   },
   layers = {
-    {
-      type = "objectgroup",
-      draworder = "topdown",
-      id = 5,
-      name = "eventTriggers",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      parallaxx = 1,
-      parallaxy = 1,
-      properties = {},
-      objects = {
-        {
-          id = 60,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 224,
-          y = 48,
-          width = 64,
-          height = 64,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 61,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 168,
-          y = 256,
-          width = 28,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        }
-      }
-    },
     {
       type = "objectgroup",
       draworder = "topdown",
@@ -808,6 +767,60 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 68,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 236,
+          y = 64,
+          width = 12,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 5,
+      name = "eventTriggers",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 60,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 224,
+          y = 48,
+          width = 64,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 61,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 168,
+          y = 256,
+          width = 28,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -868,8 +881,8 @@ return {
         0, 1048, 1049, 1050, 0, 1089, 1090, 1091, 0, 0, 0, 0, 0, 0, 598, 0, 0, 0, 602, 0, 0, 0, 639, 640, 641, 642, 643, 0, 0, 0,
         0, 1089, 1090, 1091, 0, 1130, 1131, 1132, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 679, 680, 681, 682, 683, 684, 685, 0, 0,
         0, 1130, 1131, 1132, 0, 1171, 1172, 1173, 1048, 1049, 1050, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 720, 721, 722, 723, 724, 725, 726, 0, 0,
-        0, 1171, 1172, 1173, 0, 0, 0, 0, 1089, 1090, 1091, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 761, 762, 763, 764, 765, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 1130, 1131, 1132, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 802, 803, 804, 805, 806, 0, 0, 0,
+        0, 1171, 1172, 1173, 0, 0, 0, 0, 1089, 1090, 1091, 0, 0, 0, 1400, 1401, 0, 0, 0, 0, 0, 0, 761, 762, 763, 764, 765, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 1130, 1131, 1132, 0, 0, 0, 1441, 1442, 0, 0, 0, 0, 0, 0, 802, 803, 804, 805, 806, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 1171, 1172, 1173, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

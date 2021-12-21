@@ -11,9 +11,10 @@ require(statesPath .. 'splashScreenState')
 require(statesPath .. 'titleScreenState')
 require(statesPath .. 'creditsScreenState')
 require(statesPath .. 'dialogueState')
-
+require(statesPath .. 'battleState')
 require(statesPath .. 'scene1State')
 require(statesPath .. 'scene2State')
+require(statesPath .. 'scene3State')
 
 -- IMPORT PLAYER.
 require('src/player')
@@ -29,6 +30,8 @@ sounds.soundtrack.village = love.audio.newSource(soundtrackPath .. 'village.mp3'
 sounds.soundtrack.village:setLooping(true)
 sounds.soundtrack.outpost = love.audio.newSource(soundtrackPath .. 'outpost.mp3', 'static')
 sounds.soundtrack.outpost:setLooping(true)
+sounds.soundtrack.battle = love.audio.newSource(soundtrackPath .. 'battle.mp3', 'static')
+sounds.soundtrack.battle:setLooping(true)
 sounds.soundtrack.credits = love.audio.newSource(soundtrackPath .. 'credits.mp3', 'static')
 
 local sfxPath = 'assets/audio/sfx/'
@@ -39,7 +42,7 @@ for i = 1, 30 do
 end
 sounds.sfx.cursor = love.audio.newSource(sfxPath .. 'ui/cursor.wav', 'static')
 sounds.sfx.select = love.audio.newSource(sfxPath .. 'ui/select.wav', 'static')
-
+sounds.sfx.hit = love.audio.newSource(sfxPath .. 'hit.wav', 'static')
 
 -- IMPORT FONTS.
 fonts = {}

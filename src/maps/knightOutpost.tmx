@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="67">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="69">
  <editorsettings>
   <export target="knightOutpost.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="2132" columns="41">
   <image source="tileset.png" width="656" height="832"/>
  </tileset>
- <objectgroup id="5" name="eventTriggers">
-  <object id="60" x="224" y="48" width="64" height="64"/>
-  <object id="61" x="168" y="256" width="28" height="16"/>
- </objectgroup>
  <objectgroup id="4" name="walls">
   <object id="1" x="352" y="40" width="80" height="52"/>
   <object id="3" x="380" y="8" width="24" height="32"/>
@@ -66,6 +62,11 @@
   <object id="56" x="88" y="24" width="4" height="36"/>
   <object id="57" x="84" y="36" width="4" height="20"/>
   <object id="58" x="80" y="44" width="4" height="12"/>
+  <object id="68" x="236" y="64" width="12" height="32"/>
+ </objectgroup>
+ <objectgroup id="5" name="eventTriggers">
+  <object id="60" x="224" y="48" width="64" height="80"/>
+  <object id="61" x="168" y="256" width="28" height="16"/>
  </objectgroup>
  <layer id="1" name="ground" width="30" height="17">
   <data encoding="csv">
@@ -94,8 +95,8 @@
 0,1048,1049,1050,0,1089,1090,1091,0,0,0,0,0,0,598,0,0,0,602,0,0,0,639,640,641,642,643,0,0,0,
 0,1089,1090,1091,0,1130,1131,1132,0,0,0,0,0,0,0,0,0,0,0,0,0,679,680,681,682,683,684,685,0,0,
 0,1130,1131,1132,0,1171,1172,1173,1048,1049,1050,0,0,0,0,0,0,0,0,0,0,720,721,722,723,724,725,726,0,0,
-0,1171,1172,1173,0,0,0,0,1089,1090,1091,0,0,0,0,0,0,0,0,0,0,0,761,762,763,764,765,0,0,0,
-0,0,0,0,0,0,0,0,1130,1131,1132,0,0,0,0,0,0,0,0,0,0,0,802,803,804,805,806,0,0,0,
+0,1171,1172,1173,0,0,0,0,1089,1090,1091,0,0,0,1400,1401,0,0,0,0,0,0,761,762,763,764,765,0,0,0,
+0,0,0,0,0,0,0,0,1130,1131,1132,0,0,0,1441,1442,0,0,0,0,0,0,802,803,804,805,806,0,0,0,
 0,0,0,0,0,0,0,0,1171,1172,1173,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
