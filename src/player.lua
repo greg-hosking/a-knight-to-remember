@@ -1,12 +1,12 @@
 local anim8 = require('src/lib/anim8')
 
-function newPlayer(map)
+function newPlayer(map, x, y)
     local player = {}
 
-    local spritesheet = love.graphics.newImage('assets/images/spritesheets/characters1.png')
+    -- Setup player animations.
+    local spritesheet = love.graphics.newImage('assets/images/spritesheets/walk_anims.png')
     local grid = anim8.newGrid(26, 36, spritesheet:getWidth(), spritesheet:getHeight())
 
-    -- Setup player animations.
     player.animations = {}
     player.animations.walk = {}
     player.animations.walk.up = anim8.newAnimation(grid(1, 4, 2, 4, 3, 4, 2, 4), 0.2)
@@ -14,26 +14,19 @@ function newPlayer(map)
     player.animations.walk.down = anim8.newAnimation(grid(1, 1, 2, 1, 3, 1, 2, 1), 0.2)
     player.animations.walk.right = anim8.newAnimation(grid(1, 3, 2, 3, 3, 3, 2, 3), 0.2)
     player.currentAnimation = player.animations.walk.down
+    player.currentAnimation:gotoFrame(2)             
 
+    -- Setup player position and dimensions.
     player.hitbox = {}
-    player.hitbox.x = 256
-    player.hitbox.y = 400
+    player.hitbox.x = x
+    player.hitbox.y = y
     player.hitbox.w = 64
     player.hitbox.h = 32
 
     player.sprite = {}
     player.sprite.x = player.hitbox.x - 16
-    player.sprite.y = player.hitbox.y - 20
-    player.sprite.y = player.hitbox.y - 36
-
-    -- player.hitbox.x = 
-    -- love.graphics.rectangle('line', player.x + 16, player.y + 20, w * 4 - 20 - 16, h * 4 - 20)
-
-    player.x = 256
-    player.y = 400
-
+    player.sprite.y = player.hitbox.y - 112
     player.speed = 160
-
 
     -- Setup wall collisions for the current map.
     local walls = {}
@@ -44,7 +37,21 @@ function newPlayer(map)
             wall.y = obj.y * 4
             wall.w = obj.width * 4
             wall.h = obj.height * 4
-            table.insert(walls, wall)
+            walls[i] = wall
+        end
+    end
+
+    -- Also setup event triggers for the current map.
+    local eventTriggers = {}
+    if map.layers.eventTriggers then
+        for i, obj in ipairs(map.layers.eventTriggers.objects) do
+            local eventTrigger = {}
+            eventTrigger.x = obj.x * 4
+            eventTrigger.y = obj.y * 4
+            eventTrigger.w = obj.width * 4
+            eventTrigger.h = obj.height * 4
+            eventTrigger.callback = obj.callback
+            eventTriggers[i] = eventTrigger
         end
     end
 
@@ -92,6 +99,16 @@ function newPlayer(map)
             end
         end
 
+        -- Check for collisions with event triggers.
+        for i = 1, #eventTriggers do
+            local eventTrigger = eventTriggers[i]
+            if ((player.hitbox.x > eventTrigger.x and player.hitbox.x < eventTrigger.x + eventTrigger.w) or
+                (player.hitbox.x + player.hitbox.w > eventTrigger.x and player.hitbox.x < eventTrigger.x + eventTrigger.w)) and
+               ((player.hitbox.y > eventTrigger.y and player.hitbox.y < eventTrigger.y + eventTrigger.h) or 
+                (player.hitbox.y + player.hitbox.h > eventTrigger.y and player.hitbox.y < eventTrigger.y + eventTrigger.h)) then
+                eventTrigger.callback()
+            end
+        end
     end
 
     function player.update(dt)
@@ -116,26 +133,9 @@ function newPlayer(map)
         player.currentAnimation:update(dt)
     end
 
-
     function player.draw()
-
         player.currentAnimation:draw(spritesheet, player.sprite.x, player.sprite.y, 0, 4, 4)
-        local w, h = player.currentAnimation:getDimensions()
-
-        love.graphics.rectangle('line', player.hitbox.x, player.hitbox.y, player.hitbox.w, player.hitbox.h)
-        love.graphics.rectangle('line', player.sprite.x, player.sprite.y, w * 4, h * 4)
-        -- love.graphics.rectangle('line', player.x + 16, player.y + 20, w * 4 - 20 - 16, h * 4 - 20)
-
-
-        love.graphics.setColor(1, 0, 0)
-        for i = 1, #walls do
-            local wall = walls[i]
-            -- love.graphics.rectangle('fill', wall.x, wall.y, wall.w, wall.h)
-        end
-        -- animation:draw(spritesheet, W/2, H/2, 0, 4, 4)
     end
 
-
-    
     return player
 end
