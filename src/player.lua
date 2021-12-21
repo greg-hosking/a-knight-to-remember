@@ -27,7 +27,6 @@ function newPlayer(map, x, y)
     player.sprite.x = player.hitbox.x - 16
     player.sprite.y = player.hitbox.y - 112
     player.speed = 160
-    player.speed = 512
 
     -- Setup wall collisions for the current map.
     local walls = {}

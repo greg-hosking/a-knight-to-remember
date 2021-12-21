@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="27">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="28">
  <editorsettings>
   <export target="astevaria.lua" format="lua"/>
  </editorsettings>
@@ -8,6 +8,7 @@
  </tileset>
  <objectgroup id="6" name="eventTriggers">
   <object id="16" x="216" y="0" width="28" height="28"/>
+  <object id="27" x="64" y="92" width="16" height="12"/>
  </objectgroup>
  <objectgroup id="5" name="walls">
   <object id="3" x="16" y="0" width="128" height="96"/>

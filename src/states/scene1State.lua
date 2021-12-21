@@ -23,6 +23,25 @@ function newScene1State()
     end
     scene1State.map.layers.eventTriggers.objects[1].callback = callback
         
+    -- Setup the callback for returning to the title screen.
+    local fadeOutState = newFadeOutState({ r = 0, g = 0, b = 0 }, 1, true)
+    local fadeInState = newFadeInState(
+        { r = 0, g = 0, b = 0 }, 1, true,
+        function()
+            sounds.soundtrack.village:stop()
+            sounds.soundtrack.title:play()
+            stateStack.pop()
+            stateStack.push(newTitleScreenState())
+            stateStack.push(fadeOutState)
+        end
+    )
+    local callback = function() 
+        if love.keyboard.isDown('w', 'up') then
+            stateStack.push(fadeInState) 
+        end
+    end
+    scene1State.map.layers.eventTriggers.objects[2].callback = callback
+
     -- Spawn in the player.
     local player = newPlayer(scene1State.map, 256, 400)
 

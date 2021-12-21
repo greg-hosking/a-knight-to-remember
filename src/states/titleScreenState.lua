@@ -67,7 +67,8 @@ function newTitleScreenState()
                                     portraits['2-6'], sounds.sfx.blips[10],
                                     function() 
                                         stateStack.push(newDialogueState(
-                                            'I\'M HEADING TO THE KNIGHT OUTPOST NOW. MEET ME THERE WHEN YOU\'RE READY TO TRAIN!', 
+                                            'I\'M HEADING TO THE KNIGHT OUTPOST NOW. MEET ME THERE WHEN YOU\'RE READY TO TRAIN! ' ..
+                                            'OR YOU CAN HEAD BACK INSIDE TO GO TO THE TITLE SCREEN... BUT I\'M NOT SURE WHAT THAT MEANS.', 
                                             portraits['2-6'], sounds.sfx.blips[10]))                                                                 
                                     end))
                             end))
