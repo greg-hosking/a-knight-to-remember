@@ -1,3 +1,7 @@
+-- IMPORT EXTERNAL LIBRARIES.
+sti = require('src/lib/sti')
+anim8 = require('src/lib/anim8')
+
 -- IMPORT STATE STACK AND STATES.
 local statesPath = 'src/states/'
 stateStack = require(statesPath .. 'stateStack')
@@ -8,7 +12,11 @@ require(statesPath .. 'titleScreenState')
 require(statesPath .. 'creditsScreenState')
 require(statesPath .. 'dialogueState')
 
-require('gameTestState')
+require(statesPath .. 'scene1State')
+require(statesPath .. 'scene2State')
+
+-- IMPORT PLAYER.
+require('src/player')
 
 -- IMPORT SFX AND SOUNDTRACK.
 sounds = {}
@@ -16,7 +24,11 @@ sounds = {}
 local soundtrackPath = 'assets/audio/soundtrack/'
 sounds.soundtrack = {}
 sounds.soundtrack.title = love.audio.newSource(soundtrackPath .. 'title.mp3', 'static')
-
+sounds.soundtrack.title:setLooping(true)
+sounds.soundtrack.village = love.audio.newSource(soundtrackPath .. 'village.mp3', 'static')
+sounds.soundtrack.village:setLooping(true)
+sounds.soundtrack.outpost = love.audio.newSource(soundtrackPath .. 'outpost.mp3', 'static')
+sounds.soundtrack.outpost:setLooping(true)
 sounds.soundtrack.credits = love.audio.newSource(soundtrackPath .. 'credits.mp3', 'static')
 
 local sfxPath = 'assets/audio/sfx/'
@@ -62,5 +74,5 @@ fonts.serif.sm = {}
 fonts.serif.sm.size = 32
 fonts.serif.sm.font = love.graphics.newFont(serifPath, fonts.serif.sm.size)
 
--- IMPORT IMAGES.
+-- IMPORT PORTRAIT IMAGES.
 portraits = require('src/portraits')
